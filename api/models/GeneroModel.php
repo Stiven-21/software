@@ -13,6 +13,7 @@
                 $query -> execute([':genero' => $genero['genero']]);
                 return $query -> rowCount();
             }catch (PDOException  $e) {
+                echo $e -> getMessage();
                 return false;
             }
         }
@@ -24,6 +25,7 @@
                 $query -> execute([':genero' => $genero['genero'], ':id' => $id]);
                 return $query -> rowCount();
             }catch (PDOException  $e) {
+                echo $e -> getMessage();
                 return false;
             }
         }
@@ -35,6 +37,7 @@
                 $query -> execute([':id' => $id]);
                 return $query -> fetch();
             }catch (PDOException  $e) {
+                echo $e -> getMessage();
                 return [];
             }
         }
@@ -44,6 +47,7 @@
                 $query = $this -> db -> connect() -> query("SELECT * FROM GENERO");
                 return $query -> fetchAll();
             }catch (PDOException  $e) {
+                echo $e -> getMessage();
                 return [];
             }
         }
@@ -55,6 +59,7 @@
                 $query -> execute([':id' => $id]);
                 return $query -> rowCount();
             }catch (PDOException  $e) {
+                echo $e -> getMessage();
                 return false;
             }
         }
