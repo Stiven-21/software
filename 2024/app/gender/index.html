@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>GENEROS</h2>
+    <form 
+        id="genderForm"
+    >
+        <label for="gender">Genero:</label>
+        <input type="text" name="gender" id="gender" maxlength="7" min="1" required>
+
+        <button>Guardar</button>
+    </form>
+
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Genero</th>
+                </tr>
+            </thead>
+            <tbody id="genderList">   </tbody>
+        </table>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost/software/api/genero';
+
+        window.onload = function() {
+            loadGenders();
+        }
+
+        function loadGenders() {
+            fetch(API_URL, { method: 'GET' })
+                .then(response => response.json())
+                .then(genders => {
+                    console.log(genders);
+                    const genderList = document.getElementById('genderList');
+                    genderList.innerHTML = '';
+                    genders.forEach(gender => {
+                        const row = `
+                            <tr>
+                                <td>${gender.ID_GENERO}</td>
+                                <td>${gender.GENERO}</td>
+                            </tr>
+                        `;
+                        genderList.innerHTML += row;
+                    });
+                });
+        }
+
+        document.getElementById('genderForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const gender = document.getElementById('gender').value;
+            console.log(gender);
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ genero: gender })
+            });
+            if (response.ok) {
+                loadGenders();
+            }
+        });
+    </script>
+    
+</body>
+</html>
